@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService';
+import { message } from 'antd';
 
 const initialState = {
   user: null,
@@ -12,7 +13,7 @@ const initialState = {
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
   try {
     return await authService.register(user)
-    
+
   } catch (error) {
     console.error(error);
     const message = error.response.data.message
@@ -23,7 +24,13 @@ export const register = createAsyncThunk('auth/register', async (user, thunkAPI)
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.isError = false
+      state.isSuccess = false
+      state.message = ''
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.fulfilled, (state, action) => {
@@ -36,5 +43,7 @@ export const authSlice = createSlice({
       })
   }
 })
+
+export const { reset } = authSlice.actions
 
 export default authSlice.reducer

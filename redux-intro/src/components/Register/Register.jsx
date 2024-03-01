@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../redux/auth/authSlice'
+import { register, reset } from '../../redux/auth/authSlice'
 import { notification } from 'antd';
 
 const Register = () => {
@@ -20,6 +20,8 @@ const Register = () => {
         description: message
       })
     }
+
+    dispatch(reset())
   }, [isSuccess, isError, message])
 
   const [formData, setFormData] = useState({
