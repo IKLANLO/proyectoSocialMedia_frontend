@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HomeOutlined, LogoutOutlined, LoginOutlined, IdcardOutlined, AuditOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/auth/authSlice';
 
 const items = [
   {
@@ -33,8 +35,15 @@ const items = [
 
 const Header = () => {
   const [current, setCurrent] = useState('mail');
-
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
+
+  const onLogout = (e) => {
+    e.preventDefault()
+    dispatch(logout())
+    navigate('/login')
+  }
 
   const onClick = (e) => {
     console.log('click ', e);
@@ -47,7 +56,7 @@ const Header = () => {
         navigate('/login')
         break
       case 'logout':
-        navigate('/logout')
+        onLogout(e)
         break
       case 'register': 
         navigate('/register')
