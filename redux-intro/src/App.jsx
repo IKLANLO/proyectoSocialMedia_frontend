@@ -4,6 +4,7 @@ import Login from './components/Login/Login'
 import Header from './components/Header/Header'
 import Register from './components/Register/Register'
 import PrivateZone from './guards/PrivateZone'
+import Profile from './components/Profile/Profile'
 import './App.scss'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
           <Route path='/profile' 
             element={
               <PrivateZone>
-                {/* <Profile /> */}
+                <Profile />
               </PrivateZone>
             } 
           />

@@ -3,44 +3,48 @@ import { useNavigate } from 'react-router-dom';
 import { HomeOutlined, LogoutOutlined, LoginOutlined, IdcardOutlined, AuditOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../redux/auth/authSlice';
+import { logout } from '../../redux/auth/authSlice'
 
-const items = [
-  {
-    label: 'Home',
-    key: 'home',
-    icon: <HomeOutlined />,
-  },
-  {
-    label: 'Login',
-    key: 'login',
-    icon: <LoginOutlined />,
-  },
-  {
-    label: 'Logout',
-    key: 'logout',
-    icon: <LogoutOutlined />,
-  },
-  {
-    label: 'Registro',
-    key: 'register',
-    icon: <IdcardOutlined />,
-  },
-  {
-    label: 'Perfil',
-    key: 'profile',
-    icon: <AuditOutlined />,
-  }
-];
+const token = localStorage.getItem('token')
+
 
 const Header = () => {
-  const [current, setCurrent] = useState('mail');
+
+  const { user } = useSelector((state) => state.auth)
+  const [current, setCurrent] = useState('home');
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.auth)
 
-  const onLogout = (e) => {
-    e.preventDefault()
+  const items = [
+    {
+      label: 'Home',
+      key: 'home',
+      icon: <HomeOutlined />,
+    },
+    !user ? {
+      label: 'Login',
+      key: 'login',
+      icon: <LoginOutlined />,
+    } : {},
+    user ? {
+      label: 'Logout',
+      key: 'logout',
+      icon: <LogoutOutlined />,
+    } : {},
+    !user ? {
+      label: 'Registro',
+      key: 'register',
+      icon: <IdcardOutlined />,
+    } : {},
+    user ? {
+      label: 'Perfil',
+      key: 'profile',
+      icon: <AuditOutlined />,
+    } : {}
+  ];
+
+
+  const onLogout = () => {
     dispatch(logout())
     navigate('/login')
   }
@@ -56,12 +60,12 @@ const Header = () => {
         navigate('/login')
         break
       case 'logout':
-        onLogout(e)
+        onLogout()
         break
       case 'register': 
         navigate('/register')
         break
-      case 'perfil': 
+      case 'profile': 
         navigate('/profile')
         break
     }
