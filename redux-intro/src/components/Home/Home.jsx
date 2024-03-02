@@ -1,6 +1,10 @@
+import Posts from '../Posts/Posts'
+
 const Home = () => {
   return(
-    <h1>Home</h1>
+    <>
+      <Posts/>
+    </>
   )
 }
 

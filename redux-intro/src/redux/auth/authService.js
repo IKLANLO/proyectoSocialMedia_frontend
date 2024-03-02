@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080'
+const API_URL = 'http://localhost:8080/socialmedia'
 
 const register = async (userData) => {
-  const res = await axios.post(`${API_URL}/socialmedia`, userData)
+  const res = await axios.post(`${API_URL}`, userData)
   return res.data
 }
 
 const login = async (userData) => {
-  const res = await axios.post(`${API_URL}/socialmedia/login`, userData)
+  const res = await axios.post(`${API_URL}/login`, userData)
 
   if (res.data) {
     localStorage.setItem('user', JSON.stringify(userData.email))
@@ -19,7 +19,7 @@ const login = async (userData) => {
 
 const logout = async () => {
   const token = JSON.parse(localStorage.getItem('token'))
-  const res = await axios.delete(`${API_URL}/socialmedia/logout`, { headers: { Authorization: token } })
+  const res = await axios.delete(`${API_URL}/logout`, { headers: { Authorization: token } })
 
   if (res.data) {
     localStorage.clear()
