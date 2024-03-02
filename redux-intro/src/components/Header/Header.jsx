@@ -1,12 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HomeOutlined, LogoutOutlined, LoginOutlined, IdcardOutlined, AuditOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/auth/authSlice'
-
-const token = localStorage.getItem('token')
-
 
 const Header = () => {
 
@@ -14,35 +11,53 @@ const Header = () => {
   const [current, setCurrent] = useState('home');
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  let items = []
 
-  const items = [
-    {
-      label: 'Home',
-      key: 'home',
-      icon: <HomeOutlined />,
-    },
-    !user ? {
-      label: 'Login',
-      key: 'login',
-      icon: <LoginOutlined />,
-    } : {},
-    user ? {
-      label: 'Logout',
-      key: 'logout',
-      icon: <LogoutOutlined />,
-    } : {},
-    !user ? {
-      label: 'Registro',
-      key: 'register',
-      icon: <IdcardOutlined />,
-    } : {},
-    user ? {
-      label: 'Perfil',
-      key: 'profile',
-      icon: <AuditOutlined />,
-    } : {}
-  ];
+  const handleMenu = () => {
+    if (user) {
+      items = [
+        {
+          label: 'Home',
+          key: 'home',
+          icon: <HomeOutlined />,
+        },
+        {
+          label: 'Logout',
+          key: 'logout',
+          icon: <LogoutOutlined />,
+        },
+        {
+          label: 'Perfil',
+          key: 'profile',
+          icon: <AuditOutlined />,
+        }
+      ]
+    } else {
+      items = [
+        {
+          label: 'Home',
+          key: 'home',
+          icon: <HomeOutlined />,
+        },
+        {
+          label: 'Login',
+          key: 'login',
+          icon: <LoginOutlined />,
+        },
+        {
+          label: 'Registro',
+          key: 'register',
+          icon: <IdcardOutlined />,
+        }
+      ]
+    }
+  }
 
+  handleMenu()
+
+  useEffect(() => {
+    handleMenu()
+  }, [user])
 
   const onLogout = () => {
     dispatch(logout())
@@ -71,7 +86,8 @@ const Header = () => {
     }
   };
 
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} 
+    style={{display:'flex', justifyContent:'center'}} />;
 }
 
 export default Header
