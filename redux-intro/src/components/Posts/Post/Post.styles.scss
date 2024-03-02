@@ -1,0 +1,11 @@
+.card-container {
+  margin-bottom: .625rem;
+
+  &__leftalign {
+    text-align: left;
+  }
+
+  &__rightalign {
+    text-align: right;
+  }
+}
