@@ -5,6 +5,7 @@ import Header from './components/Header/Header'
 import Register from './components/Register/Register'
 import PrivateZone from './guards/PrivateZone'
 import Profile from './components/Profile/Profile'
+import PostDetail from './components/Posts/PostDetail/PostDetail'
 import './App.scss'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
               </PrivateZone>
             } 
           />
+          <Route path='/post/:id' element={<PostDetail/>}/>
         </Routes>
       </BrowserRouter>
 
