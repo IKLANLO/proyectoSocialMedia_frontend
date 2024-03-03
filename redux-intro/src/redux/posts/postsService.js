@@ -12,9 +12,16 @@ const getById = async (id) => {
   return res.data
 }
 
+const newPost = async (data) => {
+  const { title, text, token } = data
+  const res = await axios.post(`${API_URL}`, { name: title, post: text }, { headers: {Authorization: token }})
+  return res.data.post
+}
+
 const postsService = {
   getAll,
-  getById
+  getById,
+  newPost
 }
 
 export default postsService
