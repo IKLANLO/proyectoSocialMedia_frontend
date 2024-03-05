@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getById, deletePost } from '../../../redux/posts/postsSlice'
+import { getById, deletePost, putPost } from '../../../redux/posts/postsSlice'
 import { LikeOutlined } from '@ant-design/icons'
-import { Statistic, Card, message } from 'antd'
+import { Statistic, Card, message, Modal, Form, Input, Button } from 'antd'
 import '../Post/Post.styles.scss'
 
 const PostDetail = () => {
@@ -17,6 +17,34 @@ const PostDetail = () => {
     comments = 0
 
   const [messageApi, contextHolder] = message.useMessage()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [form] = Form.useForm()
+
+  const handlePutPost = () => {
+    setIsModalVisible(true)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+    form.resetFields()
+  }
+
+  const handleSubmit = () => {
+    form.validateFields().then((values) => {
+      console.log(values)
+      dispatch(
+        putPost({
+          name: values.title,
+          post: values.text,
+          token: token,
+          id: id,
+        })
+      )
+      setIsModalVisible(false)
+      form.resetFields()
+      handleMessage('Post modificado correctamente')
+    })
+  }
 
   const handleMessage = (message) => {
     messageApi.open({
@@ -33,11 +61,28 @@ const PostDetail = () => {
 
   useEffect(() => {
     dispatch(getById(id))
-  }, [])
+  }, [dispatch])
+
+  let showButtons = []
+  if (prevSection === '/profile') {
+    showButtons = (
+      <>
+        {contextHolder}
+        <button onClick={handlePutPost}>Editar</button>
+        <button
+          onClick={() => {
+            dispatch(deletePost({ id, token }))
+            handleMessage('Post eliminado correctamente')
+          }}>
+          Eliminar
+        </button>
+      </>
+    )
+  }
 
   return (
     <>
-      <h2>PostDetail</h2>
+      <h2>Detalle del post</h2>
       <Card title={post.name} className="card-container">
         <div className="card-container__leftalign">
           <p>{post.post}</p>
@@ -63,19 +108,42 @@ const PostDetail = () => {
             )
           })}
       </Card>
-      {contextHolder}
-      <button>Editar</button>
-      <button
-        onClick={() => {
-          dispatch(deletePost({ id, token }))
-          handleMessage('Post eliminado correctamente')
-        }}>
-        Eliminar
-      </button>
+      {showButtons}
       <button
         onClick={() => (prevSection ? navigate(prevSection) : navigate('/'))}>
         Volver
       </button>
+      <Modal
+        title="Modifica el post"
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancelar
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleSubmit}>
+            Enviar
+          </Button>,
+        ]}>
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="title"
+            label="Título"
+            initialValue={post.name}
+            rules={[
+              { required: true, message: 'Por favor ingrese el título' },
+            ]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="text"
+            label="Texto"
+            initialValue={post.post}
+            rules={[{ required: true, message: 'Por favor ingrese el texto' }]}>
+            <Input.TextArea />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   )
 }

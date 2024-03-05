@@ -19,9 +19,14 @@ const newPost = async (data) => {
 }
 
 const deletePost = async (data) => {
-  console.log('service');
   const { id, token } = data
   const res = await axios.delete(`${API_URL}/delete/${id}`, { headers: {Authorization: token }})
+  return res.data
+}
+
+const putPost = async (data) => {
+  const { id, token, ...restData } = data
+  const res = await axios.put(`${API_URL}/update/${id}`, restData, { headers: {Authorization: token }})
   return res.data
 }
 
@@ -29,7 +34,8 @@ const postsService = {
   getAll,
   getById,
   newPost,
-  deletePost
+  deletePost,
+  putPost
 }
 
 export default postsService
