@@ -10,14 +10,13 @@ const Profile = () => {
   const navigate = useNavigate()
 
   const handlePostDetail = (post) => {
-    console.log('hola')
     localStorage.setItem('prevSection', JSON.stringify('/profile'))
     navigate(`/post/${post._id}`)
   }
 
   return (
     <>
-      <h2>Perfil</h2>
+      <h2>Datos personales</h2>
       <p>
         {user.first_name} {user.last_name}
       </p>

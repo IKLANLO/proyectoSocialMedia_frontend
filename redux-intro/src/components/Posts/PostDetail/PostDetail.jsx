@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getById } from '../../../redux/posts/postsSlice'
+import { getById, deletePost } from '../../../redux/posts/postsSlice'
 import { LikeOutlined } from '@ant-design/icons'
-import { Statistic, Card } from 'antd'
+import { Statistic, Card, message } from 'antd'
 import '../Post/Post.styles.scss'
 
 const PostDetail = () => {
@@ -12,8 +12,21 @@ const PostDetail = () => {
   const navigate = useNavigate()
   const { post } = useSelector((state) => state.posts)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
+  const token = JSON.parse(localStorage.getItem('token'))
   let likes = 0,
     comments = 0
+
+  const [messageApi, contextHolder] = message.useMessage()
+
+  const handleMessage = (message) => {
+    messageApi.open({
+      type: 'success',
+      content: message,
+    })
+    setTimeout(() => {
+      navigate('/profile')
+    }, 2000)
+  }
 
   post.likes ? (likes = post.likes.length) : 0
   post.comments ? (comments = post.comments.length) : 0
@@ -50,6 +63,15 @@ const PostDetail = () => {
             )
           })}
       </Card>
+      {contextHolder}
+      <button>Editar</button>
+      <button
+        onClick={() => {
+          dispatch(deletePost({ id, token }))
+          handleMessage('Post eliminado correctamente')
+        }}>
+        Eliminar
+      </button>
       <button
         onClick={() => (prevSection ? navigate(prevSection) : navigate('/'))}>
         Volver

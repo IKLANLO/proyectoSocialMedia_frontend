@@ -18,10 +18,18 @@ const newPost = async (data) => {
   return res.data.post
 }
 
+const deletePost = async (data) => {
+  console.log('service');
+  const { id, token } = data
+  const res = await axios.delete(`${API_URL}/delete/${id}`, { headers: {Authorization: token }})
+  return res.data
+}
+
 const postsService = {
   getAll,
   getById,
-  newPost
+  newPost,
+  deletePost
 }
 
 export default postsService
