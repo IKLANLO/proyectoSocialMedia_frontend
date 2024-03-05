@@ -11,10 +11,12 @@ const login = async (userData) => {
   const res = await axios.post(`${API_URL}/login`, userData)
 
   if (res.data) {
-    localStorage.setItem('user', JSON.stringify(userData.email))
+    // localStorage.setItem('user', JSON.stringify(userData.email))
+    localStorage.setItem('user', JSON.stringify(res.data.user))
     localStorage.setItem('token', JSON.stringify(res.data.token))
   }
-  return {token: res.data.token, email: userData.email}
+  // return {token: res.data.token, email: userData.email}
+  return {token: res.data.token, user: res.data.user}
 }
 
 const logout = async () => {
