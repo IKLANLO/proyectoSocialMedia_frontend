@@ -1,18 +1,22 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Card } from 'antd'
-
+import { getByUser } from '../../redux/posts/postsSlice'
 const Profile = () => {
   const { user } = useSelector((state) => state.auth)
-  const { posts } = useSelector((state) => state.posts)
-  const userData = JSON.parse(localStorage.getItem('user'))
-  const userPosts = posts.filter((post) => post.userId === userData._id)
+  const { userPosts } = useSelector((state) => state.posts)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const handlePostDetail = (post) => {
+  const handlePostDetail = (id) => {
     localStorage.setItem('prevSection', JSON.stringify('/profile'))
-    navigate(`/post/${post._id}`)
+    navigate(`/post/${id}`)
   }
+
+  useEffect(() => {
+    dispatch(getByUser(user._id))
+  }, [])
 
   return (
     <>
@@ -22,13 +26,14 @@ const Profile = () => {
       </p>
       <p>{user.email}</p>
       <h2>Posts</h2>
+      {console.log('userPosts', userPosts)}
       {userPosts &&
         userPosts.map((post) => (
           <div key={post._id}>
             <Card
               className="card-container"
               style={{ cursor: 'pointer' }}
-              onClick={() => handlePostDetail(post)}>
+              onClick={() => handlePostDetail(post._id)}>
               <p className="card-container__title">{post.name}</p>
             </Card>
           </div>

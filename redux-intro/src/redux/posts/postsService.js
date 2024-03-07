@@ -12,6 +12,11 @@ const getById = async (id) => {
   return res.data
 }
 
+const getByUser = async (id) => {
+  const res = await axios.get(`${API_URL}/userId/${id}`)
+  return res.data
+}
+
 const newPost = async (data) => {
   const { title, text, token } = data
   const res = await axios.post(`${API_URL}`, { name: title, post: text }, { headers: {Authorization: token }})
@@ -33,6 +38,7 @@ const putPost = async (data) => {
 const postsService = {
   getAll,
   getById,
+  getByUser,
   newPost,
   deletePost,
   putPost
