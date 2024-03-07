@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getById, deletePost, putPost } from '../../../redux/posts/postsSlice'
-import { LikeOutlined } from '@ant-design/icons'
-import { Statistic, Card, message, Modal, Form, Input, Button } from 'antd'
+import {
+  getById,
+  deletePost,
+  putPost,
+  putLike,
+  deleteLike,
+} from '../../../redux/posts/postsSlice'
+import { LikeOutlined, LikeFilled } from '@ant-design/icons'
+import { Card, message, Modal, Form, Input, Button } from 'antd'
 import '../Post/Post.styles.scss'
 
 const PostDetail = () => {
@@ -11,10 +17,13 @@ const PostDetail = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { post } = useSelector((state) => state.posts)
+  const { user } = useSelector((state) => state.auth)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
   const token = JSON.parse(localStorage.getItem('token'))
   let likes = 0,
     comments = 0
+
+  const isLiked = post.likes?.some((like) => like.userId === user?._id)
 
   const [messageApi, contextHolder] = message.useMessage()
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -44,6 +53,16 @@ const PostDetail = () => {
       form.resetFields()
       handleMessage('Post modificado correctamente')
     })
+  }
+
+  const handleLike = () => {
+    if (isLiked) {
+      dispatch(deleteLike({ id: post._id, token }))
+      handleMessage('Like eliminado')
+    } else {
+      dispatch(putLike({ id: post._id, token }))
+      handleMessage('Like añadido')
+    }
   }
 
   const handleMessage = (message) => {
@@ -88,11 +107,17 @@ const PostDetail = () => {
           <p>{post.post}</p>
         </div>
         {post.likes && (
-          <Statistic
-            className="card-container__rightalign"
-            value={likes}
-            prefix={<LikeOutlined />}
-          />
+          <div className="card-container__rightalign">
+            {isLiked ? (
+              <span>
+                <LikeFilled onClick={handleLike} /> {likes}
+              </span>
+            ) : (
+              <span>
+                <LikeOutlined onClick={handleLike} /> {likes}
+              </span>
+            )}
+          </div>
         )}
         {comments > 0 && (
           <h3 className="card-container__leftalign">{comments} comentarios </h3>

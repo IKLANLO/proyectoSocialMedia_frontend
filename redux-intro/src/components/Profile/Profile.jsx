@@ -26,7 +26,6 @@ const Profile = () => {
       </p>
       <p>{user.email}</p>
       <h2>Posts</h2>
-      {console.log('userPosts', userPosts)}
       {userPosts &&
         userPosts.map((post) => (
           <div key={post._id}>

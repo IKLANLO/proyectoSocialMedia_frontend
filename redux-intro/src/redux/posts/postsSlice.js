@@ -56,6 +56,22 @@ export const putPost = createAsyncThunk('posts/putPost', async (data) => {
   }
 })
 
+export const putLike = createAsyncThunk('posts/putLike', async (data) => {
+  try {
+    return await postsService.putLike(data)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
+export const deleteLike = createAsyncThunk('posts/deleteLike', async (data) => {
+  try {
+    return await postsService.deleteLike(data)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -86,6 +102,24 @@ export const postsSlice = createSlice({
     })
     .addCase(putPost.fulfilled, (state, action) => {
       state.post = action.payload.post
+    })
+    .addCase(putLike.fulfilled, (state, action) => {
+      const posts = state.posts.map((post) => {
+        if (post._id === action.payload._id) {
+          post = action.payload.post
+        }
+        return post
+      })
+      state.posts = posts
+    })
+    .addCase(deleteLike.fulfilled, (state, action) => {
+      const posts = state.posts.map((post) => {
+        if (post._id === action.payload._id) {
+          post = action.payload.post
+        }
+        return post
+      })
+      state.posts = posts
     })
   }
 })
