@@ -20,13 +20,13 @@ const PostDetail = () => {
   const { user } = useSelector((state) => state.auth)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
   const token = JSON.parse(localStorage.getItem('token'))
-  let likes = 0,
-    comments = 0
+  let comments = 0
 
   const isLiked = post.likes?.some((like) => like.userId === user?._id)
 
   const [messageApi, contextHolder] = message.useMessage()
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [Likes, setLikes] = useState(0)
   const [form] = Form.useForm()
 
   const handlePutPost = () => {
@@ -58,10 +58,8 @@ const PostDetail = () => {
   const handleLike = () => {
     if (isLiked) {
       dispatch(deleteLike({ id: post._id, token }))
-      handleMessage('Like eliminado')
     } else {
       dispatch(putLike({ id: post._id, token }))
-      handleMessage('Like añadido')
     }
   }
 
@@ -75,12 +73,19 @@ const PostDetail = () => {
     }, 2000)
   }
 
-  post.likes ? (likes = post.likes.length) : 0
   post.comments ? (comments = post.comments.length) : 0
 
   useEffect(() => {
     dispatch(getById(id))
   }, [dispatch])
+
+  useEffect(() => {
+    if (post.likes) {
+      setLikes(post.likes.length)
+    } else {
+      setLikes(0)
+    }
+  }, [post.likes])
 
   let showButtons = []
   if (prevSection === '/profile') {
@@ -110,11 +115,11 @@ const PostDetail = () => {
           <div className="card-container__rightalign">
             {isLiked ? (
               <span>
-                <LikeFilled onClick={handleLike} /> {likes}
+                <LikeFilled onClick={handleLike} /> {Likes}
               </span>
             ) : (
               <span>
-                <LikeOutlined onClick={handleLike} /> {likes}
+                <LikeOutlined onClick={handleLike} /> {Likes}
               </span>
             )}
           </div>
