@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Card } from 'antd'
 import { getByUser } from '../../redux/posts/postsSlice'
+import '../Posts/Posts.style.scss'
+
 const Profile = () => {
   const { user } = useSelector((state) => state.auth)
   const { userPosts } = useSelector((state) => state.posts)
@@ -26,17 +28,19 @@ const Profile = () => {
       </p>
       <p>{user.email}</p>
       <h2>Posts</h2>
-      {userPosts &&
-        userPosts.map((post) => (
-          <div key={post._id}>
-            <Card
-              className="card-container"
-              style={{ cursor: 'pointer' }}
-              onClick={() => handlePostDetail(post._id)}>
-              <p className="card-container__title">{post.name}</p>
-            </Card>
-          </div>
-        ))}
+      <div className="container">
+        {userPosts &&
+          userPosts.map((post) => (
+            <div div className="container__posts" key={post._id}>
+              <Card
+                className="card-container"
+                style={{ cursor: 'pointer' }}
+                onClick={() => handlePostDetail(post._id)}>
+                <p className="card-container__title">{post.name}</p>
+              </Card>
+            </div>
+          ))}
+      </div>
     </>
   )
 }

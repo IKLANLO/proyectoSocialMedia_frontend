@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LoadingOutlined } from '@ant-design/icons'
 import { Spin, Modal, Form, Input, Button } from 'antd'
+import './Posts.style.scss'
 
 const Posts = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -39,13 +40,21 @@ const Posts = () => {
   }, [dispatch])
 
   return (
-    <>
+    <div className="container">
       <h2>Posts</h2>
-      {token ? <button onClick={handleNewPost}>Nuevo post</button> : <></>}
+      {token ? (
+        <button className="new-post" onClick={handleNewPost}>
+          Nuevo post
+        </button>
+      ) : (
+        <></>
+      )}
       {isLoading ? (
         <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
       ) : (
-        <Post />
+        <div className="container__posts">
+          <Post />
+        </div>
       )}
       <Modal
         title="Nuevo Post"
@@ -76,7 +85,7 @@ const Posts = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   )
 }
 

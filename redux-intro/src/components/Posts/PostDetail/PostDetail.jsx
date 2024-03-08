@@ -21,7 +21,8 @@ const PostDetail = () => {
   const { user } = useSelector((state) => state.auth)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
   const token = JSON.parse(localStorage.getItem('token'))
-  let comments = 0
+  let comments = 0,
+    commentText = ' ='
 
   const isLiked = post.likes?.some((like) => like.userId === user?._id)
 
@@ -124,8 +125,15 @@ const PostDetail = () => {
             )}
           </div>
         )}
+        {comments === 1
+          ? (commentText = 'comentario')
+          : comments > 1
+          ? (commentText = 'comentarios')
+          : ''}
         {comments > 0 && (
-          <h3 className="card-container__leftalign">{comments} comentarios </h3>
+          <h3 className="card-container__leftalign">
+            {comments} {commentText}{' '}
+          </h3>
         )}
         {comments > 0 &&
           post.comments.map((comment) => {

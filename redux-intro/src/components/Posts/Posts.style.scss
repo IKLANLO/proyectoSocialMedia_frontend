@@ -1,0 +1,14 @@
+.new-post {
+  margin-bottom: .625rem
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__posts {
+    width: 70%;
+  }
+}

@@ -2,6 +2,7 @@ import { Form, Input, Button } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { putComment } from '../../../../redux/posts/postsSlice'
+import './Comment.styles.scss'
 
 const Comment = () => {
   const [form] = Form.useForm()
@@ -27,12 +28,19 @@ const Comment = () => {
         <Form.Item
           name="comment"
           rules={[{ required: true, message: 'Por favor ingrese el texto' }]}>
-          <Input.TextArea placeholder="añade un comentario" />
+          <Input.TextArea
+            placeholder="añade un comentario"
+            className="comment-text"
+          />
         </Form.Item>
-        <Button key="cancel" onClick={handleCancel}>
+        <Button className="button" key="cancel" onClick={handleCancel}>
           Cancelar
         </Button>
-        <Button key="submit" type="primary" onClick={handleSubmit}>
+        <Button
+          className="button"
+          key="submit"
+          type="primary"
+          onClick={handleSubmit}>
           Enviar
         </Button>
       </Form>
