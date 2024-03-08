@@ -10,12 +10,13 @@ import {
 } from '../../../redux/posts/postsSlice'
 import { LikeOutlined, LikeFilled } from '@ant-design/icons'
 import { Card, message, Modal, Form, Input, Button } from 'antd'
+import Comment from './Comment/Comment'
 import '../Post/Post.styles.scss'
 
 const PostDetail = () => {
-  const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { id } = useParams()
   const { post } = useSelector((state) => state.posts)
   const { user } = useSelector((state) => state.auth)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
@@ -40,7 +41,6 @@ const PostDetail = () => {
 
   const handleSubmit = () => {
     form.validateFields().then((values) => {
-      console.log(values)
       dispatch(
         putPost({
           name: values.title,
@@ -137,6 +137,7 @@ const PostDetail = () => {
               </div>
             )
           })}
+        <Comment />
       </Card>
       {showButtons}
       <button

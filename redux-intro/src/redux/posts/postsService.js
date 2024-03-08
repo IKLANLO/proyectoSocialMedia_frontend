@@ -47,6 +47,12 @@ const deleteLike = async (data) => {
   return res.data
 }
 
+const putComment = async (data) => {
+  const { id, comment, token } = data
+  const res = await axios.put(`${API_URL}/comments/${id}`, comment, { headers: {Authorization: token }})
+  return res.data.post
+}
+
 const postsService = {
   getAll,
   getById,
@@ -55,7 +61,8 @@ const postsService = {
   deletePost,
   putPost,
   putLike,
-  deleteLike
+  deleteLike,
+  putComment
 }
 
 export default postsService
