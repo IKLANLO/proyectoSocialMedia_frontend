@@ -1,0 +1,16 @@
+.footer {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  height: 2.8125rem;
+  
+  &__span {
+    color: #2C3E50;
+    font-weight: 400;
+    font-size: .875rem;
+  }
+}

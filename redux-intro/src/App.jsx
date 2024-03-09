@@ -7,6 +7,7 @@ import PrivateZone from './guards/PrivateZone'
 import Profile from './components/Profile/Profile'
 import PostDetail from './components/Posts/PostDetail/PostDetail'
 import Search from './components/Search/Search'
+import Footer from './components/Footer/Footer'
 import './App.scss'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/post/:id" element={<PostDetail />} />
           <Route path="/search/:postName" element={<Search />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   )
