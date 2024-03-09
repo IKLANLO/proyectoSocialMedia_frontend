@@ -28,7 +28,9 @@ export const login = createAsyncThunk('auth/login', async (user) => {
     return await authService.login(user)
 
   } catch (error) {
-    console.error(error)
+    console.error(error.response.status)
+
+    return error.response.status
   }
 })
 
