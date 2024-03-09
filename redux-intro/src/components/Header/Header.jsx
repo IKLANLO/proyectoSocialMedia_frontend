@@ -1,14 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { HomeOutlined, LogoutOutlined, LoginOutlined, IdcardOutlined, AuditOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+  IdcardOutlined,
+  AuditOutlined,
+} from '@ant-design/icons'
+import { Menu } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/auth/authSlice'
+import Search from '../Search/Search'
 
 const Header = () => {
-
   const { user } = useSelector((state) => state.auth)
-  const [current, setCurrent] = useState('home');
+  const [current, setCurrent] = useState('home')
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let items = []
@@ -30,7 +36,11 @@ const Header = () => {
           label: 'Perfil',
           key: 'profile',
           icon: <AuditOutlined />,
-        }
+        },
+        {
+          key: 'search',
+          icon: <Search />,
+        },
       ]
     } else {
       items = [
@@ -48,7 +58,11 @@ const Header = () => {
           label: 'Registro',
           key: 'register',
           icon: <IdcardOutlined />,
-        }
+        },
+        {
+          key: 'search',
+          icon: <Search />,
+        },
       ]
     }
   }
@@ -65,29 +79,41 @@ const Header = () => {
   }
 
   const onClick = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-    switch (e.key){ 
-      case 'home': 
+    console.log('click ', e)
+    setCurrent(e.key)
+    switch (e.key) {
+      case 'home':
         navigate('/')
         break
-      case 'login': 
+      case 'login':
         navigate('/login')
         break
       case 'logout':
         onLogout()
         break
-      case 'register': 
+      case 'register':
         navigate('/register')
         break
-      case 'profile': 
+      case 'profile':
         navigate('/profile')
         break
     }
-  };
+  }
 
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} 
-    style={{display:'flex', justifyContent:'center'}} />;
+  return (
+    <>
+      <Menu
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={items}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      />
+    </>
+  )
 }
 
 export default Header
