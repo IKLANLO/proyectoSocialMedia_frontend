@@ -93,8 +93,11 @@ const PostDetail = () => {
     showButtons = (
       <>
         {contextHolder}
-        <button onClick={handlePutPost}>Editar</button>
+        <button style={{ margin: '0 1.25rem' }} onClick={handlePutPost}>
+          Editar
+        </button>
         <button
+          style={{ margin: '0 1.25rem' }}
           onClick={() => {
             dispatch(deletePost({ id, token }))
             handleMessage('Post eliminado correctamente')
@@ -147,11 +150,14 @@ const PostDetail = () => {
           })}
         <Comment />
       </Card>
-      {showButtons}
-      <button
-        onClick={() => (prevSection ? navigate(prevSection) : navigate('/'))}>
-        Volver
-      </button>
+      <>
+        {showButtons}
+        <button
+          style={{ margin: '0 1.25rem' }}
+          onClick={() => (prevSection ? navigate(prevSection) : navigate('/'))}>
+          Volver
+        </button>
+      </>
       <Modal
         title="Modifica el post"
         open={isModalVisible}

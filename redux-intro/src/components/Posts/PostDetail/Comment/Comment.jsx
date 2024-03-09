@@ -24,26 +24,30 @@ const Comment = () => {
 
   return (
     <>
-      <Form form={form} layout="vertical">
-        <Form.Item
-          name="comment"
-          rules={[{ required: true, message: 'Por favor ingrese el texto' }]}>
-          <Input.TextArea
-            placeholder="añade un comentario"
-            className="comment-text"
-          />
-        </Form.Item>
-        <Button className="button" key="cancel" onClick={handleCancel}>
-          Cancelar
-        </Button>
-        <Button
-          className="button"
-          key="submit"
-          type="primary"
-          onClick={handleSubmit}>
-          Enviar
-        </Button>
-      </Form>
+      {token ? (
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="comment"
+            rules={[{ required: true, message: 'Por favor ingrese el texto' }]}>
+            <Input.TextArea
+              placeholder="añade un comentario"
+              className="comment-text"
+            />
+          </Form.Item>
+          <Button className="button" key="cancel" onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button
+            className="button"
+            key="submit"
+            type="primary"
+            onClick={handleSubmit}>
+            Enviar
+          </Button>
+        </Form>
+      ) : (
+        <></>
+      )}
     </>
   )
 }

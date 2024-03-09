@@ -1,10 +1,14 @@
+$main-color: #2C3E50;
+$secondary-color: white;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: white;
-  background-color: #2C3E50;
+  color: $secondary-color;
+
+  background-color: $main-color;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,9 +43,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #2C3E50;
-  background-color: white;
-  border-color: #2C3E50;
+  color: $main-color;
+  background-color: $secondary-color;
+  border-color: $main-color;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -53,15 +57,20 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px inset;
+  -webkit-text-fill-color: $main-color;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: $main-color;
+    background-color: $secondary-color;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: $secondary-color;
   }
 }
