@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   posts: [],
   userPosts: [],
+  searchPosts: [],
   isLoading: false,
   post: {},
 }
@@ -80,6 +81,14 @@ export const putComment = createAsyncThunk('posts/putComment', async (data) => {
   }
 })
 
+export const getPostByName = createAsyncThunk('posts/getPostByName', async (data) => {
+  try {
+    return await postsService.getPostByName(data)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
@@ -141,6 +150,9 @@ export const postsSlice = createSlice({
       })
       state.posts = posts
       state.post = action.payload
+    })
+    .addCase(getPostByName.fulfilled, (state, action) => {
+      state.searchPosts = action.payload
     })
   }
 })

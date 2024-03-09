@@ -12,6 +12,7 @@ import { LikeOutlined, LikeFilled } from '@ant-design/icons'
 import { Card, message, Modal, Form, Input, Button } from 'antd'
 import Comment from './Comment/Comment'
 import '../Post/Post.styles.scss'
+import '../../Posts/Posts.style.scss'
 
 const PostDetail = () => {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const PostDetail = () => {
   const { user } = useSelector((state) => state.auth)
   const prevSection = JSON.parse(localStorage.getItem('prevSection'))
   const token = JSON.parse(localStorage.getItem('token'))
+  const userId = JSON.parse(localStorage.getItem('user'))?._id
   let comments = 0,
     commentText = ' ='
 
@@ -89,7 +91,7 @@ const PostDetail = () => {
   }, [post.likes])
 
   let showButtons = []
-  if (prevSection === '/profile') {
+  if ((prevSection === '/profile' || userId === post?.userId) && token) {
     showButtons = (
       <>
         {contextHolder}
@@ -111,45 +113,47 @@ const PostDetail = () => {
   return (
     <>
       <h2>Detalle del post</h2>
-      <Card title={post.name} className="card-container">
-        <div className="card-container__leftalign">
-          <p>{post.post}</p>
-        </div>
-        {post.likes && (
-          <div className="card-container__rightalign">
-            {isLiked ? (
-              <span>
-                <LikeFilled onClick={handleLike} /> {Likes}
-              </span>
-            ) : (
-              <span>
-                <LikeOutlined onClick={handleLike} /> {Likes}
-              </span>
-            )}
+      <div className="container">
+        <Card title={post.name} className="card-container container__posts">
+          <div className="card-container__leftalign">
+            <p>{post.post}</p>
           </div>
-        )}
-        {comments === 1
-          ? (commentText = 'comentario')
-          : comments > 1
-          ? (commentText = 'comentarios')
-          : ''}
-        {comments > 0 && (
-          <h3 className="card-container__leftalign">
-            {comments} {commentText}{' '}
-          </h3>
-        )}
-        {comments > 0 &&
-          post.comments.map((comment) => {
-            return (
-              <div
-                key={comment._id}
-                className="card-container__leftalign card-container__comment">
-                <Card type="inner">{comment.comment}</Card>
-              </div>
-            )
-          })}
-        <Comment />
-      </Card>
+          {post.likes && (
+            <div className="card-container__rightalign">
+              {isLiked ? (
+                <span>
+                  <LikeFilled onClick={handleLike} /> {Likes}
+                </span>
+              ) : (
+                <span>
+                  <LikeOutlined onClick={handleLike} /> {Likes}
+                </span>
+              )}
+            </div>
+          )}
+          {comments === 1
+            ? (commentText = 'comentario')
+            : comments > 1
+            ? (commentText = 'comentarios')
+            : ''}
+          {comments > 0 && (
+            <h3 className="card-container__leftalign">
+              {comments} {commentText}{' '}
+            </h3>
+          )}
+          {comments > 0 &&
+            post.comments.map((comment) => {
+              return (
+                <div
+                  key={comment._id}
+                  className="card-container__leftalign card-container__comment">
+                  <Card type="inner">{comment.comment}</Card>
+                </div>
+              )
+            })}
+          <Comment />
+        </Card>
+      </div>
       <>
         {showButtons}
         <button

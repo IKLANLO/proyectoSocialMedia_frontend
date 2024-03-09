@@ -53,6 +53,11 @@ const putComment = async (data) => {
   return res.data.post
 }
 
+const getPostByName = async (data) => {
+  const res = await axios.get(`${API_URL}/name/${data}`)
+  return res.data
+}
+
 const postsService = {
   getAll,
   getById,
@@ -62,7 +67,8 @@ const postsService = {
   putPost,
   putLike,
   deleteLike,
-  putComment
+  putComment,
+  getPostByName
 }
 
 export default postsService

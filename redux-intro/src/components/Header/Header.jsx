@@ -7,17 +7,37 @@ import {
   IdcardOutlined,
   AuditOutlined,
 } from '@ant-design/icons'
-import { Menu } from 'antd'
+import { Menu, Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/auth/authSlice'
-import Search from '../Search/Search'
+import { getPostByName } from '../../redux/posts/postsSlice'
 
 const Header = () => {
   const { user } = useSelector((state) => state.auth)
   const [current, setCurrent] = useState('home')
+  const [text, setText] = useState('')
+  const { Search } = Input
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let items = []
+
+  const handleChange = (value, _e, info) => {
+    setText(value)
+    dispatch(getPostByName(value))
+    navigate(`/search/${value}`)
+  }
+
+  const SearchIcon = () => (
+    <Search
+      placeholder="busca posts"
+      allowClear
+      onSearch={handleChange}
+      style={{
+        width: 200,
+        marginTop: '.375rem',
+      }}
+    />
+  )
 
   const handleMenu = () => {
     if (user) {
@@ -39,7 +59,7 @@ const Header = () => {
         },
         {
           key: 'search',
-          icon: <Search />,
+          icon: <SearchIcon />,
         },
       ]
     } else {
@@ -61,7 +81,7 @@ const Header = () => {
         },
         {
           key: 'search',
-          icon: <Search />,
+          icon: <SearchIcon />,
         },
       ]
     }

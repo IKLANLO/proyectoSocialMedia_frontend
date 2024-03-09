@@ -9,7 +9,6 @@ import './Posts.style.scss'
 const Posts = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [form] = Form.useForm()
-
   const { isLoading } = useSelector((state) => state.posts)
   const dispatch = useDispatch()
 

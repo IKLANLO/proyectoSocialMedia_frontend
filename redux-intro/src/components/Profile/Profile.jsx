@@ -29,7 +29,7 @@ const Profile = () => {
       <p>{user.email}</p>
       <h2>Posts</h2>
       <div className="container">
-        {userPosts &&
+        {userPosts?.length > 0 ? (
           userPosts.map((post) => (
             <div div className="container__posts" key={post._id}>
               <Card
@@ -39,7 +39,10 @@ const Profile = () => {
                 <p className="card-container__title">{post.name}</p>
               </Card>
             </div>
-          ))}
+          ))
+        ) : (
+          <>No hay posts publicados aún</>
+        )}
       </div>
     </>
   )
