@@ -3,7 +3,7 @@ import { login } from '../../redux/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-import { Alert, Space } from 'antd'
+import { Alert } from 'antd'
 import './Login.style.scss'
 
 const Login = () => {
@@ -29,10 +29,9 @@ const Login = () => {
     e.preventDefault()
     try {
       const res = await dispatch(login(formData))
-      if (res.payload.response.status === 500) {
+      if (res.payload?.response?.status === 500) {
         setMessageVisible(true)
-        setTimeout(() => setMessageVisible(false), 3000)
-        return
+        return setTimeout(() => setMessageVisible(false), 3000)
       }
       navigate('/profile')
     } catch (error) {
