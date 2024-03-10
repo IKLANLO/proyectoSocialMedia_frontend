@@ -31,3 +31,12 @@
     }
   }
 }
+
+.message-container {
+  display: flex;
+  justify-content: center;
+
+  &__alert {
+    width: fit-content;
+  }
+}

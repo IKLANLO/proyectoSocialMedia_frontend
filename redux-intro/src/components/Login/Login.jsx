@@ -3,7 +3,7 @@ import { login } from '../../redux/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
-// import { Input, Button } from 'antd'
+import { Alert, Space } from 'antd'
 import './Login.style.scss'
 
 const Login = () => {
@@ -12,6 +12,7 @@ const Login = () => {
     password: '',
   })
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const [messageVisible, setMessageVisible] = useState(false)
   const navigate = useNavigate()
   const { email, password } = formData
 
@@ -26,8 +27,17 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    await dispatch(login(formData))
-    navigate('/profile')
+    try {
+      const res = await dispatch(login(formData))
+      if (res.payload.response.status === 500) {
+        setMessageVisible(true)
+        setTimeout(() => setMessageVisible(false), 3000)
+        return
+      }
+      navigate('/profile')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -40,6 +50,7 @@ const Login = () => {
           value={email}
           placeholder="Email"
           onChange={onChange}
+          required
         />
         <span className="container__input container__password">
           <input
@@ -49,6 +60,7 @@ const Login = () => {
             value={password}
             placeholder="Contraseña"
             onChange={onChange}
+            required
           />
           {passwordVisible ? (
             <EyeTwoTone onClick={() => setPasswordVisible(false)} />
@@ -58,6 +70,18 @@ const Login = () => {
         </span>
         <button type="submit">Login</button>
       </form>
+      {messageVisible ? (
+        <div className="message-container">
+          <Alert
+            className="message-container__alert"
+            message="Usuario o clave incorrectos, revisa los datos introducidos"
+            type="error"
+            showIcon
+          />
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   )
 }
