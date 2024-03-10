@@ -29,6 +29,7 @@ const Header = () => {
 
   const SearchIcon = () => (
     <Search
+      visibilityToggle
       placeholder="busca posts"
       allowClear
       onSearch={handleChange}

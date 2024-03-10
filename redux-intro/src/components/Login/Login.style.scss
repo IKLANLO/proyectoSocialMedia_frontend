@@ -6,9 +6,28 @@
   &__input {
     margin: 10px;
     height: 1.875rem;
+    width: 40%;
     color: #2C3E50;
     background-color: white;
     border-color: #2C3E50;
     border-radius: .3125rem;
+  }
+
+  &__password {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    height: 2.125rem;
+    padding-right: .125rem;
+
+    &__input {
+      background-color: white;
+      width: 93%;
+      // padding: 0;
+      border-radius: 0.3125rem;
+      border:none;
+      outline: none;
+      color: #2C3E50
+    }
   }
 }
