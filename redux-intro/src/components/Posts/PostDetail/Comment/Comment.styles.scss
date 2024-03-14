@@ -1,12 +1,16 @@
 .comment-text {
-  border-color: lightblue;
+  border-color: #78b4aa;
   border-width: .125rem;
 }
 
-.button {
+.comment-text:hover {
+  border-color: #283a35;
+}
+
+.buttons {
   margin: 0 .625rem;
   background-color: rgba(255, 255, 255, 0.87);
-  color: #2C3E50;
+  color: #78b4aa;
   border-style: solid;
-  border-color: #2C3E50;
+  border-color: #78b4aa;
 }

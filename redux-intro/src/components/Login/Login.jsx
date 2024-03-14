@@ -29,7 +29,7 @@ const Login = () => {
     e.preventDefault()
     try {
       const res = await dispatch(login(formData))
-      if (res.payload?.response?.status === 500) {
+      if (res.payload?.response?.status === 400) {
         setMessageVisible(true)
         return setTimeout(() => setMessageVisible(false), 3000)
       }

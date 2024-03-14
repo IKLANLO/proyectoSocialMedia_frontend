@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { register, reset } from '../../redux/auth/authSlice'
 import { notification } from 'antd'
 import '../Login/Login.style.scss'
 
 const Register = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const { isSuccess, isError, message } = useSelector((state) => state.auth)
 
   useEffect(() => {
     if (isSuccess) {
       notification.success({
-        message: 'Success',
         description: message,
       })
     } else if (isError) {
       notification.error({
-        message: 'Error',
         description: message,
       })
     }
@@ -43,7 +44,6 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(register(formData))
-    console.log('formData', formData)
   }
 
   return (

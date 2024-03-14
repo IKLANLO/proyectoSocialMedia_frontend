@@ -110,6 +110,12 @@ const PostDetail = () => {
     )
   }
 
+  comments === 1
+    ? (commentText = 'comentario')
+    : comments > 1
+    ? (commentText = 'comentarios')
+    : ''
+
   return (
     <>
       <h2>Detalle del post</h2>
@@ -131,11 +137,7 @@ const PostDetail = () => {
               )}
             </div>
           )}
-          {comments === 1
-            ? (commentText = 'comentario')
-            : comments > 1
-            ? (commentText = 'comentarios')
-            : ''}
+
           {comments > 0 && (
             <h3 className="card-container__leftalign">
               {comments} {commentText}{' '}

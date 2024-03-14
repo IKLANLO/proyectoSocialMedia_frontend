@@ -34,13 +34,21 @@ const Comment = () => {
               className="comment-text"
             />
           </Form.Item>
-          <Button className="button" key="cancel" onClick={handleCancel}>
+          <Button
+            // defaultHoverBg="#283a35"
+            // defaultHoverBorderColor="#283a35"
+            // defaultHoverColor="#283a35"
+            className="buttons"
+            key="cancel"
+            onClick={handleCancel}>
             Cancelar
           </Button>
           <Button
-            className="button"
+            // defaultHoverBg="#283a35"
+            // defaultHoverBorderColor="#283a35"
+            // defaultHoverColor="#283a35"
+            className="buttons"
             key="submit"
-            type="primary"
             onClick={handleSubmit}>
             Enviar
           </Button>

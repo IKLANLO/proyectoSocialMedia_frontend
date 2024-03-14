@@ -1,5 +1,8 @@
-$main-color: #2C3E50;
-$secondary-color: white;
+// $main-color: #2C3E50;
+$main-color: #3C5951;
+
+// $secondary-color: white;
+$secondary-color: #D9D9D9;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -8,7 +11,8 @@ $secondary-color: white;
   color-scheme: light dark;
   color: $secondary-color;
 
-  background-color: $main-color;
+  // background-color: $main-color;
+  background: linear-gradient(#3C5951, #5D8C84);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
