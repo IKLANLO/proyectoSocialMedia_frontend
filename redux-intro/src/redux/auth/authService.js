@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/socialmedia'
+// const API_URL = 'http://localhost:8080/socialmedia'
+const API_URL = 'https://socialmedia-mongodb-dev-eteb.1.us-1.fl0.io/socialmedia'
 
 const register = async (userData) => {
   const res = await axios.post(`${API_URL}`, userData)

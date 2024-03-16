@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/posts'
+// const API_URL = 'http://localhost:8080/posts'
+const API_URL = 'https://socialmedia-mongodb-dev-eteb.1.us-1.fl0.io/posts'
 
 const getAll = async () => {
   const res = await axios.get(`${API_URL}`)
