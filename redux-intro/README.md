@@ -27,7 +27,7 @@ En éste proyecto se crea una web en la que el usuario debe registrarse, logarse
 
 La web consta de una cabecera superior en la que el usuario puede acceder a las distintas funciones implementadas. Según esté logado o no los apartados disponibles variarán.
 
-Se divide en: '**Home**, '**Login / Logout** ', '**Registro**', '**Perfil**' y '**buscador de posts**'.
+Se accede desde https://spectacular-clafoutis-a7e00e.netlify.app/, y se divide en: '**Home**, '**Login / Logout** ', '**Registro**', '**Perfil**' y '**buscador de posts**'.
 
 <a name="home"></a>
 
